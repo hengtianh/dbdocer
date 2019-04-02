@@ -18,12 +18,7 @@ public class DocerApp {
 		// TODO 数据库文档处理启动类
 		String file = "";
 		for (int i = 0; i < num; i++) {
-			if (i == 0) {
-				file = path + firstFile;
-			} else {
-				String[] apart = firstFile.split("\\.");
-				file = path + apart[0] + "_" + i + "." + apart[1];
-			}
+			file = concatFileName(firstFile, i);
 			System.out.println(file);
 			Document dom = DocReader.readHtml(file, "GB2312");
 			Element elem = DocReader.parseBody(dom);
@@ -46,8 +41,26 @@ public class DocerApp {
 	
 	public static void main(String ... args) {
 		String firstFile = "";
-		parseTableItem(firstFile);
+		char[] fileNameCodes = firstFile.toCharArray();
+		int index = 0;
+		for (int i = 0; i < fileNameCodes.length; i++) {
+			if (fileNameCodes[i] > 9 || fileNameCodes[i] < 0) {
+				continue;
+			}
+			index = i;
+			break;
+		}
+		String firstName = firstFile.substring(0, index);
+		String lastName = firstFile.substring(index);
+		String[] last = lastName.split("\\.");
+		int seq = Integer.valueOf(last[0]);
+		for (int i = seq; seq < num; i++) {
+			String file = firstName + i + "." + last[1];
+			parseTableItem(firstFile);
+		}
 	}
+
+
 	
 	public static void parseTableItem(String file) {
 		String firstFile = file;
