@@ -45,7 +45,7 @@ public class DocerApp {
 	}
 	
 	public static void main(String ... args) {
-		String firstFile = "";
+		String firstFile = "租赁核心4.htm";
 		parseTableItem(firstFile);
 	}
 	
@@ -64,15 +64,20 @@ public class DocerApp {
 		}
 		String tableName = "";
 		for (int i = 0; i < domList.size(); i++) {
-			if (i == 0) {
-				tableName = parseHead(domList.get(i));
-			}
 			Element elem = DocReader.parseBody(domList.get(i));
 			// tr/td/p
 			List<List<Elements>> lists = DocReader.getElementsByPath(elem, "tr/td/p");
-			lists.remove(0);
-			lists.remove(1);
-			lists.remove(2);
+			if (i == 0) {
+				tableName = parseHead(domList.get(i));
+				// 移除标题及表头的描述内容，remove后下标重排，所以逆向移除
+				lists.remove(3);
+				lists.remove(2);
+				lists.remove(1);
+				lists.remove(0);
+			} else {
+				// 第一页以后的内容只用去除表头内容
+				lists.remove(0);
+			}			
 			DocReader.parseTextOfElements(lists, new TableItemSqlCreater(tableName));
 		}
 		

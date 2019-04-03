@@ -164,9 +164,9 @@ public class DocReader {
 					  .append("'");
 				}
 			}
-			sb.append("''");
+//			sb.append("''");
 			System.out.println(sb.toString());
-			if (!",,''".equals(sb.toString()) && !"".equals(sb.toString()) && sb.toString().length() > 2) {
+			if (!",,''".equals(sb.toString()) && !"".equals(sb.toString()) && sb.toString().length() > 8) {
 				sql.append(sqlCreater.createTableDefSqlStatement(sb.toString())).append("\r\n");
 			}
 			sb = new StringBuilder("");
