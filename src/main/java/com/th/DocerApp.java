@@ -60,8 +60,6 @@ public class DocerApp {
 		}
 	}
 
-
-	
 	public static void parseTableItem(String file) {
 		String firstFile = file;
 		List<Document> domList = new ArrayList<Document>();
