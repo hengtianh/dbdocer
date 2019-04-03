@@ -21,7 +21,7 @@ public class TableInfoSqlCreater extends BaseSqlCreater implements ISqlCreater {
 	@Override
 	public String getInsertTableDefPrefix() {
 		// TODO Auto-generated method stub
-		return " insert into doc_table(descriptions, name, note) ";
+		return " insert into doc_table(descriptions, name) ";
 	}
 
 	@Override

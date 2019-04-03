@@ -21,7 +21,7 @@ public class TableItemSqlCreater extends BaseSqlCreater implements ISqlCreater {
 
     @Override
     public String getInsertTableDefPrefix() {
-        return " insert into doc_table_item(descriptions, name, note, tableName) ";
+        return " insert into doc_table_item(name, code, comments, datatype, tableName) ";
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TableItemSqlCreater extends BaseSqlCreater implements ISqlCreater {
 
     @Override
     public String getFileName() {
-        return "C:/Users/Administrator/Desktop/insert.sql";
+        return "C:/Users/Administrator/Desktop/insertItem.sql";
     }
 
     @Override
