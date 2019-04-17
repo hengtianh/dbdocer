@@ -1,10 +1,5 @@
 package com.th;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class TableInfoSqlCreater extends BaseSqlCreater implements ISqlCreater {
 
 	@Override
@@ -39,6 +34,6 @@ public class TableInfoSqlCreater extends BaseSqlCreater implements ISqlCreater {
 	@Override
 	public String getFileName() {
 		// TODO Auto-generated method stub
-		return "C:/Users/Administrator/Desktop/insert.sql";
+		return "C:/Users/Administrator/Desktop/insertTableInfo.sql";
 	}
 }

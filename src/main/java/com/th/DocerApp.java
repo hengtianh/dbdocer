@@ -12,12 +12,14 @@ public class DocerApp {
 	
 	public static String firstFile = "租赁核心3.htm";
 	
-	public static int num = 14;
+	public static int num = 13;
 
-	public static void main2(String[] args) throws Exception {
+	public static int total = 655;
+	
+	public static void mainInfo(String[] args) throws Exception {
 		// TODO 数据库文档处理启动类
 		String file = "";
-		for (int i = 0; i < num; i++) {
+		for (int i = 0; i <= num; i++) {
 			file = concatFileName(firstFile, i);
 			System.out.println(file);
 			Document dom = DocReader.readHtml(file, "GB2312");
@@ -25,7 +27,6 @@ public class DocerApp {
 			// tr/td/p
 			DocReader.parseTextOfElements(DocReader.getElementsByPath(elem, "tr/td/p/a"), new TableInfoSqlCreater());
 		}
-//		testPressDoc();
 	}
 	
 	public static String concatFileName(String file, int i) {
@@ -40,23 +41,28 @@ public class DocerApp {
 	}
 	
 	public static void main(String ... args) {
-		String firstFile = "";
-		char[] fileNameCodes = firstFile.toCharArray();
-		int index = 0;
-		for (int i = 0; i < fileNameCodes.length; i++) {
-			if (fileNameCodes[i] > 9 || fileNameCodes[i] < 0) {
+		String firstFile = "租赁核心4.htm";
+		String[] name = firstFile.split("\\.");
+		char[] nameCodes = name[0].toCharArray();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < nameCodes.length; i++) {
+			try {
+				int j = Integer.parseInt(String.valueOf(nameCodes[i]));
+			} catch (Exception e) {
 				continue;
 			}
-			index = i;
-			break;
+			sb.append(nameCodes[i]);
 		}
+		int start = Integer.parseInt(sb.toString());
+		int index = name[0].indexOf(sb.toString());
+		
 		String firstName = firstFile.substring(0, index);
-		String lastName = firstFile.substring(index);
-		String[] last = lastName.split("\\.");
-		int seq = Integer.valueOf(last[0]);
-		for (int i = seq; seq < num; i++) {
-			String file = firstName + i + "." + last[1];
-			parseTableItem(firstFile);
+		String lastName = name[1];
+//		String[] last = lastName.split("\\.");
+//		int seq = Integer.valueOf(last[0]);
+		for (int i = start; i < total; i++) {
+			String file = firstName + i + "." + lastName;
+			parseTableItem(file);
 		}
 	}
 
@@ -75,15 +81,19 @@ public class DocerApp {
 		}
 		String tableName = "";
 		for (int i = 0; i < domList.size(); i++) {
-			if (i == 0) {
-				tableName = parseHead(domList.get(i));
-			}
 			Element elem = DocReader.parseBody(domList.get(i));
 			// tr/td/p
 			List<List<Elements>> lists = DocReader.getElementsByPath(elem, "tr/td/p");
-			lists.remove(0);
-			lists.remove(1);
-			lists.remove(2);
+			if (i == 0) {
+				tableName = parseHead(domList.get(i));
+				// 由于移除后位置会重排，导致高位的下标变化，所以从高位开始移除
+				lists.remove(3);
+				lists.remove(2);
+				lists.remove(1);
+				lists.remove(0);
+			} else {
+				lists.remove(0);
+			}
 			DocReader.parseTextOfElements(lists, new TableItemSqlCreater(tableName));
 		}
 		

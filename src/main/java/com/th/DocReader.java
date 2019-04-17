@@ -154,7 +154,7 @@ public class DocReader {
 		for (List<Elements> elemsList : list) {
 			flag = 0;
 			for (Elements elements : elemsList) {
-				if (flag != 0) {
+				if (flag != 0 && flag < elemsList.size()) {
 					sb.append(",");
 				}
 				flag++;
@@ -175,6 +175,7 @@ public class DocReader {
 				counter = 0;
 				sqlCreater.setFileContent(sql.toString());
 				namedThreadFactory.newThread(sqlCreater).start();
+				sql = new StringBuilder();
 			}
 		}
 		sqlCreater.setFileContent(sql.toString());
@@ -251,24 +252,5 @@ public class DocReader {
 	public static String getText(Element elem) {
 		return elem.text();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
